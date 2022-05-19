@@ -46,8 +46,15 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
-      <router-view />
+    <q-page-container class="page-container">
+      <router-view v-if="loaded" />
+      <div class="loader" v-else>
+        <q-spinner
+          color="primary"
+          size="5rem"
+          :thickness="10"
+        />
+      </div>
     </q-page-container>
   </q-layout>
 </template>
@@ -56,6 +63,10 @@
 import { ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import scissorsImg from 'src/assets/barber-scissors-100.png';
+import { storeToRefs } from 'pinia/dist/pinia';
+import { usePriceListStore } from 'stores/priceListStore';
+
+const { loaded } = storeToRefs(usePriceListStore());
 
 const linkList = [
   {
@@ -140,7 +151,7 @@ const toggleLeftDrawer = () => leftDrawerOpen.value = !leftDrawerOpen.value;
 
     .logo {
       width: 2rem;
-      margin-top: 5px;
+      margin-top: 2px;
       margin-right: 5px;
       transform: scaleX(-1.1) scaleY(1.1);
       transition: all .1s ease-in-out;
@@ -154,6 +165,17 @@ const toggleLeftDrawer = () => leftDrawerOpen.value = !leftDrawerOpen.value;
       }
     }
   }
+}
+
+.page-container {
+  height: 90vh;
+}
+
+.loader {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>
