@@ -2,10 +2,10 @@
   <router-view />
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
+import { usePriceListStore } from 'stores/priceListStore';
 
-export default defineComponent({
-  name: 'App',
-});
+const { fill } = usePriceListStore();
+fill();
+
 </script>
